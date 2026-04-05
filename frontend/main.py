@@ -60,8 +60,9 @@ async def index(request: Request) -> HTMLResponse:
         "index.html",
         {
             "request": request,
-            "title": "Luisa Centeno | App Portfolio",
+            "title": "Luis Centeno | App Portfolio",
             "subtitle": "A curated collection of projects in active development",
             "cards": cards,
         },
     )
+
