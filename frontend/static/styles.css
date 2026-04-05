@@ -93,3 +93,14 @@ body {
     transform: translateY(0);
   }
 }
+.card-link {
+  display: inline-block;
+  margin-top: .9rem;
+  font-weight: 700;
+  color: #92400e;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}

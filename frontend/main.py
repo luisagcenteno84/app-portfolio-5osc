@@ -40,16 +40,19 @@ async def index(request: Request) -> HTMLResponse:
             "title": "Upcoming Sports Games",
             "status": "Live",
             "desc": "Track schedules, matchups, and game details in one place.",
+            "url": "https://luisagcenteno84.github.io/upcoming-sports-games/",
         },
         {
             "title": "Thoughts Publisher",
             "status": "Beta",
             "desc": "Draft and publish short updates with clean formatting.",
+            "url": "https://luisagcenteno84.github.io/thoughts-publisher/",
         },
         {
             "title": "Task Priority Organizer",
             "status": "Build",
             "desc": "Prioritize work with AI-assisted ranking and focus views.",
+            "url": "https://luisagcenteno84.github.io/task-priority-organizer/",
         },
     ]
 
@@ -62,4 +65,3 @@ async def index(request: Request) -> HTMLResponse:
             "cards": cards,
         },
     )
-
