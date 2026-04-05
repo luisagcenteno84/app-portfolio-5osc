@@ -1,0 +1,69 @@
+substitutions:
+  _REGION: us-central1
+  _REPO: app-images
+  _BACKEND_SERVICE: app-portfolio-backend
+  _FRONTEND_SERVICE: app-portfolio-frontend
+
+steps:
+- id: build-backend
+  name: gcr.io/cloud-builders/docker
+  args:
+    - build
+    - -f
+    - backend/Dockerfile
+    - -t
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+    - .
+
+- id: push-backend
+  name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+
+- id: deploy-backend
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    - run
+    - deploy
+    - ${_BACKEND_SERVICE}
+    - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+    - --region=${_REGION}
+    - --platform=managed
+    - --allow-unauthenticated
+    - --set-env-vars=FIRESTORE_COLLECTION=items
+
+- id: build-frontend
+  name: gcr.io/cloud-builders/docker
+  args:
+    - build
+    - -f
+    - frontend/Dockerfile
+    - -t
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA
+    - .
+
+- id: push-frontend
+  name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA
+
+- id: deploy-frontend
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      BACKEND_URL=$$(gcloud run services describe ${_BACKEND_SERVICE} --region ${_REGION} --format='value(status.url)')
+      gcloud run deploy ${_FRONTEND_SERVICE} \
+        --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA \
+        --region=${_REGION} \
+        --platform=managed \
+        --allow-unauthenticated \
+        --set-env-vars=BACKEND_URL=$$BACKEND_URL
+
+images:
+- ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+- ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA
