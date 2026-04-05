@@ -1,8 +1,8 @@
 param(
   [Parameter(Mandatory=$true)] [string]$ProjectId,
   [string]$Region = "us-central1",
-  [string]$BackendService = "app-portfolio-backend",
-  [string]$FrontendService = "app-portfolio-frontend"
+  [string]$BackendService = "app-portfolio-5osc-backend",
+  [string]$FrontendService = "app-portfolio-5osc-frontend"
 )
 
 $ErrorActionPreference = "Stop"

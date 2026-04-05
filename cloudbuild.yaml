@@ -1,8 +1,8 @@
 substitutions:
   _REGION: us-central1
   _REPO: app-images
-  _BACKEND_SERVICE: app-portfolio-backend
-  _FRONTEND_SERVICE: app-portfolio-frontend
+  _BACKEND_SERVICE: app-portfolio-5osc-backend
+  _FRONTEND_SERVICE: app-portfolio-5osc-frontend
 
 steps:
 - id: build-backend

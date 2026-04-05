@@ -1,4 +1,4 @@
-# app-portfolio
+# app-portfolio-5osc
 
 Portfolio web app scaffold with FastAPI frontend + backend, Firestore integration, Cloud Build CI/CD, and Cloud Run deployment.
 
@@ -25,28 +25,28 @@ docker compose up --build
 
 ## Required names
 
-- Project ID: `app-portfolio`
-- GitHub repo: `app-portfolio`
-- Backend service: `app-portfolio-backend`
-- Frontend service: `app-portfolio-frontend`
-- Trigger: `app-portfolio-main-deploy`
+- Project ID: `app-portfolio-5osc`
+- GitHub repo: `app-portfolio-5osc`
+- Backend service: `app-portfolio-5osc-backend`
+- Frontend service: `app-portfolio-5osc-frontend`
+- Trigger: `app-portfolio-5osc-main-deploy`
 
 ## GCP bootstrap
 
 ```powershell
-.\scripts\bootstrap_gcp.ps1 -ProjectId "app-portfolio" -Region "us-central1" -ArtifactRepo "app-images"
+.\scripts\bootstrap_gcp.ps1 -ProjectId "app-portfolio-5osc" -Region "us-central1" -ArtifactRepo "app-images"
 ```
 
 ## Create trigger
 
 ```powershell
-.\scripts\create_trigger.ps1 -ProjectId "app-portfolio" -GitHubOwner "luisagcenteno84" -RepoName "app-portfolio" -TriggerName "app-portfolio-main-deploy"
+.\scripts\create_trigger.ps1 -ProjectId "app-portfolio-5osc" -GitHubOwner "luisagcenteno84" -RepoName "app-portfolio-5osc" -TriggerName "app-portfolio-5osc-main-deploy"
 ```
 
 ## Deploy now
 
 ```powershell
-.\scripts\deploy_once.ps1 -ProjectId "app-portfolio" -Region "us-central1" -BackendService "app-portfolio-backend" -FrontendService "app-portfolio-frontend"
+.\scripts\deploy_once.ps1 -ProjectId "app-portfolio-5osc" -Region "us-central1" -BackendService "app-portfolio-5osc-backend" -FrontendService "app-portfolio-5osc-frontend"
 ```
 
 ## Validate

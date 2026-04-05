@@ -16,7 +16,7 @@ def get_db_client() -> firestore.Client:
 
 @app.get("/health")
 def health() -> Dict[str, str]:
-    return {"status": "ok", "service": "app-portfolio-backend"}
+    return {"status": "ok", "service": "app-portfolio-5osc-backend"}
 
 
 @app.get("/api/v1/test")
@@ -34,7 +34,7 @@ def api_test() -> Dict[str, Any]:
 
     return {
         "status": "ok",
-        "service": "app-portfolio-backend",
+        "service": "app-portfolio-5osc-backend",
         "collection": COLLECTION,
         "doc_id": doc_id,
         "data": saved.to_dict(),

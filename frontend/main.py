@@ -16,7 +16,7 @@ BACKEND_URL = os.getenv("BACKEND_URL", "")
 
 @app.get("/health")
 def health() -> Dict[str, str]:
-    return {"status": "ok", "service": "app-portfolio-frontend"}
+    return {"status": "ok", "service": "app-portfolio-5osc-frontend"}
 
 
 @app.get("/api/v1/test")
@@ -30,7 +30,7 @@ async def api_test() -> Dict[str, Any]:
         resp.raise_for_status()
         data = resp.json()
 
-    return {"status": "ok", "frontend": "app-portfolio-frontend", "backend_response": data}
+    return {"status": "ok", "frontend": "app-portfolio-5osc-frontend", "backend_response": data}
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -62,3 +62,4 @@ async def index(request: Request) -> HTMLResponse:
             "cards": cards,
         },
     )
+
