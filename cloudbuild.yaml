@@ -12,14 +12,14 @@ steps:
     - -f
     - backend/Dockerfile
     - -t
-    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$BUILD_ID
     - .
 
 - id: push-backend
   name: gcr.io/cloud-builders/docker
   args:
     - push
-    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$BUILD_ID
 
 - id: deploy-backend
   name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -28,7 +28,7 @@ steps:
     - run
     - deploy
     - ${_BACKEND_SERVICE}
-    - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
+    - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$BUILD_ID
     - --region=${_REGION}
     - --platform=managed
     - --allow-unauthenticated
@@ -41,14 +41,14 @@ steps:
     - -f
     - frontend/Dockerfile
     - -t
-    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$BUILD_ID
     - .
 
 - id: push-frontend
   name: gcr.io/cloud-builders/docker
   args:
     - push
-    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA
+    - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$BUILD_ID
 
 - id: deploy-frontend
   name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -58,12 +58,13 @@ steps:
     - |
       BACKEND_URL=$$(gcloud run services describe ${_BACKEND_SERVICE} --region ${_REGION} --format='value(status.url)')
       gcloud run deploy ${_FRONTEND_SERVICE} \
-        --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA \
+        --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$BUILD_ID \
         --region=${_REGION} \
         --platform=managed \
         --allow-unauthenticated \
         --set-env-vars=BACKEND_URL=$$BACKEND_URL
 
 images:
-- ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$SHORT_SHA
-- ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$SHORT_SHA
+- ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_BACKEND_SERVICE}:$BUILD_ID
+- ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_FRONTEND_SERVICE}:$BUILD_ID
+
